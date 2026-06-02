@@ -1,0 +1,747 @@
+.decompose-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+/* Equation header */
+.decompose-equation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(76, 205, 130, 0.15);
+  padding: 16px 24px;
+  border-radius: 12px;
+  border-left: 4px solid #2ECC71;
+  animation: slideInDown 0.6s ease-out;
+}
+
+.decompose-num {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  min-width: 50px;
+  text-align: center;
+}
+
+.decompose-num.highlight-A {
+  background: #2ECC71;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 0 16px rgba(46, 204, 113, 0.6);
+  transform: scale(1.1);
+}
+
+.decompose-op {
+  font-size: 20px;
+  color: #2ECC71;
+  font-weight: bold;
+  margin: 0 8px;
+}
+
+/* UNIFIED LEGO WORKSPACE */
+.lego-workspace {
+  position: relative;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 3px solid transparent;
+  transition: all 0.4s ease-out;
+}
+
+.lego-workspace.correct {
+  background: rgba(46, 204, 113, 0.08);
+  border-color: #2ECC71;
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+}
+
+.lego-workspace.incorrect {
+  border-color: #FF4757;
+}
+
+.lego-workspace.merge-mode {
+  background: rgba(102, 126, 234, 0.04);
+  border-color: #45B7D1;
+  box-shadow: 0 0 20px rgba(69, 183, 209, 0.3);
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+/* YOUR STRUCTURE SECTION */
+.your-structure {
+  border: 2px dashed #667eea;
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(102, 126, 234, 0.05);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+.structure-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  flex: 1;
+  transition: all 0.2s;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.structure-progress-visual {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.progress-label {
+  display: none;
+}
+
+.structure-progress-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(102, 126, 234, 0.15);
+  overflow: visible;
+  border: 1px solid rgba(102, 126, 234, 0.25);
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #45B7D1 0%, #4ECDC4 100%);
+  transition: width 0.8s ease, background 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-fill.adding {
+  animation: fillPulse 0.7s ease-out;
+}
+
+.progress-fill.overflow {
+  background: linear-gradient(90deg, #ff6b6b 0%, #ff4757 100%);
+  animation: shakeProgress 0.4s ease-out;
+}
+
+.progress-fill.correct {
+  background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.progress-fill.overflow.adding {
+  animation: shakeProgress 0.4s ease-out, fillPulse 0.7s ease-out;
+}
+
+.progress-overshoot-pattern {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 0 999px 999px 0;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0,
+    rgba(255, 255, 255, 0.15) 6px,
+    rgba(255, 255, 255, 0.4) 6px,
+    rgba(255, 255, 255, 0.4) 12px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+.progress-overflow-pattern {
+  display: none;
+}
+
+.progress-target-marker {
+  position: absolute;
+  top: -6px;
+  height: 26px;
+  width: 2px;
+  background: #2ECC71;
+  z-index: 4;
+  transform: translateX(-50%);
+  left: 0;
+}
+
+.progress-target-label {
+  display: none;
+}
+
+.progress-target-value {
+  position: absolute;
+  top: -24px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #2ECC71;
+  line-height: 1;
+  z-index: 5;
+}
+
+.progress-selected-marker {
+  position: absolute;
+  top: -6px;
+  height: 26px;
+  width: 2px;
+  background: #667eea;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+.progress-selected-marker.overflow {
+  background: #ff4757;
+}
+
+.progress-selected-value {
+  position: absolute;
+  top: -24px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #667eea;
+  line-height: 1;
+  z-index: 5;
+}
+
+.progress-selected-value.adding {
+  animation: valuePop 0.7s ease-out;
+}
+
+.progress-selected-value.overflow {
+  color: #ff4757;
+}
+
+.selected-blocks-display {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Placeholder zones for block types */
+.placeholders-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.placeholder-zone {
+  background: rgba(102, 126, 234, 0.08);
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  padding: 12px 8px 16px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.placeholder-zone.drag-over {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.15);
+  box-shadow: inset 0 0 8px rgba(102, 126, 234, 0.3);
+}
+
+.placeholder-zone.merge-source {
+  border-color: #45b7d1;
+  box-shadow: inset 0 0 0 2px rgba(69, 183, 209, 0.2);
+}
+
+.placeholder-zone.merge-target {
+  border-color: #2ecc71;
+  box-shadow: inset 0 0 0 2px rgba(46, 204, 113, 0.2);
+}
+
+.placeholder-label {
+  font-size: 11px;
+  font-weight: bold;
+  color: #667eea;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: absolute;
+  top: 2px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: 0;
+}
+
+.placeholder-empty {
+  display: none;
+}
+
+.placeholder-palm {
+  font-size: 28px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder-palm.enabled {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.placeholder-palm.enabled:hover {
+  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.placeholder-palm.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.blocks-stack {
+  position: relative;
+  width: 60px;
+  height: 64px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.blocks-stack.merge-source-stack {
+  overflow: visible;
+}
+
+.lego-block.merge-moving {
+  animation: mergeBlockTravel 2.8s ease-in-out infinite;
+  pointer-events: auto;
+}
+
+.lego-block.merge-moving.merge-lead {
+  animation-name: mergeBlockTravelLead;
+}
+
+.lego-block.merge-moving.merge-lead::before {
+  content: attr(data-merge-target);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--merge-target-color, transparent);
+  color: white;
+  font-weight: bold;
+  font-size: inherit;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  border-radius: inherit;
+  opacity: 0;
+  animation: mergeFinalPreview 2.8s ease-in-out infinite;
+}
+
+.lego-block.merge-moving.merge-lead .lego-label.merge-source-label {
+  animation: mergeSourceLabelFade 2.8s ease-in-out infinite;
+}
+
+/* LEGO HEAP SECTION */
+.available-heap {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  padding-top: 20px;
+  background: rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.available-heap.drag-over {
+  border-color: #667eea;
+  box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.heap-display {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  padding-top: 12px;
+  padding-bottom: 8px;
+}
+
+/* LEGO BLOCKS - Real Lego Brick Style */
+.lego-block,
+.lego-block-heap {
+  border-radius: 4px;
+  position: relative;
+  /* Deep 3D bottom edge like a real Lego brick */
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.30),
+    2px 6px 0 rgba(0, 0, 0, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+  border: none;
+}
+
+/* Single centered stud on stacked blocks */
+.lego-block::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 7px;
+  background: inherit;
+  border-radius: 50% 50% 0 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    0 -2px 0 rgba(0,0,0,0.15);
+  filter: brightness(1.15);
+}
+
+/* Studs on heap blocks */
+.lego-block-heap::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 6px;
+  background: inherit;
+  border-radius: 50% 50% 0 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    0 -2px 0 rgba(0,0,0,0.15);
+  filter: brightness(1.15);
+}
+
+/* Selected/stacked block */
+.lego-block {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  animation: blockAppear 0.25s ease-out backwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lego-block.removable {
+  cursor: pointer;
+}
+
+.lego-block.removable:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.3),
+    2px 10px 0 rgba(0, 0, 0, 0.25),
+    0 12px 20px rgba(0, 0, 0, 0.35);
+}
+
+.lego-label {
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,0.4),
+    0 2px 6px rgba(0,0,0,0.5);
+  z-index: 10;
+  letter-spacing: -0.5px;
+}
+
+/* Heap block */
+.lego-block-heap {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+}
+
+.lego-heap-label {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  text-shadow:
+    0 1px 0 rgba(0,0,0,0.4),
+    0 2px 6px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.lego-block-heap:hover {
+  transform: scale(1.12) translateY(-4px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.3),
+    2px 10px 0 rgba(0, 0, 0, 0.25),
+    0 14px 22px rgba(0, 0, 0, 0.35);
+}
+
+.lego-block-heap:active {
+  transform: scale(0.95) translateY(2px);
+}
+
+.lego-block-heap.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lego-block-heap.dragging {
+  opacity: 0.6;
+  transform: scale(0.9);
+}
+
+/* Stack group for grouped blocks - DEPRECATED */
+
+.stack-count {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.stack-count.merge-hidden {
+  opacity: 0;
+}
+
+/* Bin button */
+.bin-btn {
+  position: static;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(102, 126, 234, 0.4);
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 7px;
+  transition: all 0.2s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.bin-btn:hover:not(:disabled) {
+  background: rgba(255, 71, 87, 0.5);
+  border-color: #FF4757;
+  transform: scale(1.1);
+}
+
+.bin-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Feedback messages */
+.feedback-message {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  animation: feedbackPop 0.5s ease-out;
+}
+
+.feedback-message.success {
+  background: #2ECC71;
+  color: white;
+}
+
+/* Feedback section with button */
+.feedback-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.next-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+}
+
+.next-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+@keyframes shakeProgress {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-4px); }
+  20% { transform: translateX(4px); }
+  30% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  50% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  70% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  90% { transform: translateX(-4px); }
+}
+
+@keyframes fillPulse {
+  0% { filter: brightness(1); }
+  40% { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes valuePop {
+  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.75; }
+  40% { transform: translateX(-50%) translateY(-4px) scale(1.08); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes mergeBlockTravel {
+  0%, 14% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  58% {
+    transform: translateX(var(--merge-travel, 0px)) scale(0.82);
+    opacity: 1;
+  }
+  65%, 90% {
+    transform: translateX(var(--merge-travel, 0px)) scale(0.62);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mergeBlockTravelLead {
+  0%, 14% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  58% {
+    transform: translateX(var(--merge-travel, 0px)) scale(0.82);
+    opacity: 1;
+  }
+  68%, 90% {
+    transform: translateX(var(--merge-travel, 0px)) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mergeFinalPreview {
+  0%, 67% {
+    opacity: 0;
+  }
+  68%, 90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mergeSourceLabelFade {
+  0%, 67% {
+    opacity: 1;
+  }
+  68%, 90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes feedbackPop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes blockAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
