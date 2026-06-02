@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './AddSubtotals.css';
 
 /**
  * AddSubtotals - Step 5: Calculate total of all subtotals
  * Kid adds up all the counted segments to get the final result
  */
-function AddSubtotals({ subtotals, expectedResult, onComplete }) {
+function AddSubtotals({ subtotals, onComplete }) {
   const [userAnswer, setUserAnswer] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [feedback, setFeedback] = useState(null);

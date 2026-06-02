@@ -43,19 +43,19 @@ function FingerCounting({ A, B, num1, num2, largestNum, selectedBlocks = [], onC
     return remainder > 0 ? `${groupsOfFive}×5 + ${remainder}` : `${groupsOfFive}×5`;
   };
 
-  // Auto-select first placeholder with blocks on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Auto-select the first available block type when none is selected.
   useEffect(() => {
-    if (!selectedPlaceholderType && selectedBlocks.length > 0) {
-      const firstWithBlocks = blockTypes.find(bt => {
-        const blocks = selectedBlocks.filter((b) => b.type === bt.type);
-        return blocks.length > 0;
-      });
-      if (firstWithBlocks) {
-        setSelectedPlaceholderType(firstWithBlocks.type);
-      }
+    if (selectedPlaceholderType || selectedBlocks.length === 0) return;
+
+    const priorityTypes = ['hundred', 'fifty', 'ten', 'five', 'one'];
+    const firstWithBlocks = priorityTypes.find((type) =>
+      selectedBlocks.some((block) => block.type === type)
+    );
+
+    if (firstWithBlocks) {
+      setSelectedPlaceholderType(firstWithBlocks);
     }
-  }, []);
+  }, [selectedBlocks, selectedPlaceholderType]);
 
   // Animate rows appearing one by one
   useEffect(() => {
