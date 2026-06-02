@@ -11,7 +11,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "mkdir -p dist/easy-multiplication && cp -r build/. dist/easy-multiplication/ && printf '/\\t/easy-multiplication/\\t302\\n/easy-multiplication\\t/easy-multiplication/\\t301\\n/easy-multiplication/*\\t/easy-multiplication/index.html\\t200\\n' > dist/_redirects",
+    "postbuild": "rm -rf dist && mkdir -p dist/easy-multiplication && cp -r build/. dist/easy-multiplication/ && printf '/\\t/easy-multiplication/\\t302\\n/easy-multiplication\\t/easy-multiplication/\\t301\\n/easy-multiplication/static/*\\t/easy-multiplication/static/:splat\\t200\\n/easy-multiplication/*\\t/easy-multiplication/index.html\\t200\\n' > dist/_redirects",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
