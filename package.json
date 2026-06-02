@@ -2,6 +2,7 @@
   "name": "easy-multiplication-frontend",
   "version": "1.0.0",
   "private": true,
+  "homepage": "/easy-multiplication",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -10,6 +11,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "mkdir -p dist/easy-multiplication && cp -r build/. dist/easy-multiplication/ && printf '/easy-multiplication/*\\t/easy-multiplication/index.html\\t200\\n' > dist/_redirects",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
